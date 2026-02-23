@@ -1390,17 +1390,17 @@
             color: var(--text-muted);
         }
 
-        /* AI chatbot with logo and advanced responses */
+        /* AI chatbot - smaller for mobile and desktop */
         .ai-chatbot {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
+            bottom: 20px;
+            left: 20px;
             z-index: 999;
         }
 
         .chatbot-button {
-            width: 70px;
-            height: 70px;
+            width: 56px;
+            height: 56px;
             background: var(--bg-card);
             border: 2px solid var(--primary);
             border-radius: 50%;
@@ -1410,7 +1410,7 @@
             cursor: pointer;
             box-shadow: var(--shadow-glow);
             transition: var(--transition);
-            padding: 5px;
+            padding: 4px;
         }
         .chatbot-button img {
             width: 100%;
@@ -1424,9 +1424,9 @@
 
         .chatbot-window {
             position: absolute;
-            bottom: 80px;
+            bottom: 70px;
             left: 0;
-            width: 340px;
+            width: 300px;
             background: var(--bg-card);
             border: 1px solid var(--primary);
             border-radius: var(--radius-lg);
@@ -1441,72 +1441,79 @@
 
         .chatbot-header {
             background: var(--gradient-primary);
-            padding: 20px;
+            padding: 15px;
             color: var(--bg-deep);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .chatbot-header img {
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             filter: brightness(0);
+        }
+        .chatbot-header h4 {
+            font-size: 1.1rem;
+            margin: 0;
         }
 
         .chatbot-messages {
-            padding: 20px;
-            max-height: 300px;
+            padding: 15px;
+            max-height: 260px;
             overflow-y: auto;
             background: var(--bg-deep);
         }
 
         .chatbot-message.bot p {
             background: var(--bg-card);
-            padding: 12px;
+            padding: 10px;
             border-radius: var(--radius-md);
             color: var(--text-primary);
             border: 1px solid var(--border-light);
+            font-size: 0.9rem;
         }
 
         .chatbot-message.user p {
             background: var(--primary);
             color: var(--bg-deep);
-            padding: 12px;
+            padding: 10px;
             border-radius: var(--radius-md);
             display: inline-block;
+            font-size: 0.9rem;
         }
 
         .chatbot-input {
             display: flex;
-            padding: 15px;
+            padding: 12px;
             background: var(--bg-card);
             border-top: 1px solid var(--border-light);
         }
 
         .chatbot-input input {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             background: var(--bg-deep);
             border: 1px solid var(--border-light);
             border-radius: 25px;
             color: var(--text-primary);
             outline: none;
+            font-size: 0.9rem;
         }
 
         .chatbot-input button {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--primary);
             border: none;
             color: var(--bg-deep);
-            margin-left: 10px;
+            margin-left: 8px;
             cursor: pointer;
         }
 
+        /* Mobile fixes for featured project and service cards */
         @media (max-width: 992px) {
             .hero-container,
-            .featured-project-grid,
             .about-grid {
                 grid-template-columns: 1fr;
             }
@@ -1522,6 +1529,22 @@
             }
             .faq-grid {
                 grid-template-columns: 1fr;
+            }
+            /* Fix featured project grid on mobile */
+            .featured-project-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .featured-project {
+                padding: 30px 20px;
+            }
+            .featured-project h2 {
+                font-size: 2.2rem !important;
+            }
+            /* service cards scrollable on mobile without arrows (already hidden) */
+            .service-card {
+                min-width: 280px;
+                padding: 30px 20px;
             }
         }
 
@@ -1555,6 +1578,16 @@
                 width: 100%;
                 right: -100%;
             }
+            /* featured project further adjustments */
+            .featured-project h2 {
+                font-size: 1.8rem !important;
+            }
+            .showcase-card {
+                padding: 25px;
+            }
+            .showcase-stats {
+                gap: 15px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1566,6 +1599,12 @@
             }
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+            .featured-project h2 {
+                font-size: 1.6rem !important;
+            }
+            .testimonial-card {
+                padding: 20px;
             }
         }
     </style>
@@ -2107,7 +2146,7 @@
         </div>
     </footer>
 
-    <!-- AI Chatbot with logo -->
+    <!-- AI Chatbot with logo - smaller size -->
     <div class="ai-chatbot">
         <div class="chatbot-button" onclick="toggleChatbot()">
             <img src="img/logomainwebnb.png" alt="webprishtina bot">
