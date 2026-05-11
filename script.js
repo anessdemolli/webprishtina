@@ -26,6 +26,63 @@
   });
 })();
 
+/* ════ FEATURED TERMINAL ════ */
+(function(){
+  const body = document.getElementById('ftBody');
+  if (!body) return;
+
+  const LINES = [
+    { t:'cmd',  v:'vercel --prod --project masterservicechef' },
+    { t:'out',  v:'  Queuing build...', c:'ft-dim' },
+    { t:'out',  v:'  ✓ Build completed in 3.1s', c:'ft-ok' },
+    { t:'out',  v:'  ✓ 124 modules transformed', c:'ft-ok' },
+    { t:'out',  v:'  ✓ dist/ → 418 kB gzipped', c:'ft-ok' },
+    { t:'out',  v:'  ✓ Live → masterservicechef.com', c:'ft-url' },
+    { t:'gap' },
+    { t:'cmd',  v:'git log --oneline -4' },
+    { t:'out',  v:'  a3f4b2c  feat: season 2 episode tracker', c:'ft-dim' },
+    { t:'out',  v:'  b8c2d1e  feat: RTK live vote integration', c:'ft-dim' },
+    { t:'out',  v:'  c7e4f2a  fix: og:image social meta tags', c:'ft-dim' },
+    { t:'out',  v:'  d1f8e3b  feat: RTK livestream embed', c:'ft-dim' },
+    { t:'gap' },
+    { t:'cmd',  v:'lighthouse masterservicechef.com' },
+    { t:'out',  v:'  Performance   96 / 100', c:'ft-score' },
+    { t:'out',  v:'  SEO           98 / 100', c:'ft-score' },
+    { t:'out',  v:'  Accessibility 94 / 100', c:'ft-score' },
+  ];
+
+  let idx = 0, running = false;
+
+  function addLine() {
+    if (idx >= LINES.length) {
+      setTimeout(() => { body.innerHTML = ''; idx = 0; addLine(); }, 2800);
+      return;
+    }
+    const l = LINES[idx++];
+    if (l.t === 'gap') {
+      const d = document.createElement('span');
+      d.className = 'ft-gap'; body.appendChild(d);
+    } else if (l.t === 'cmd') {
+      const d = document.createElement('span');
+      d.className = 'ft-line';
+      d.innerHTML = `<span class="ft-prompt">webprishtina@msc ~ $ </span><span class="ft-cmd">${l.v}</span>`;
+      body.appendChild(d);
+    } else {
+      const d = document.createElement('span');
+      d.className = `ft-line ${l.c || 'ft-dim'}`;
+      d.textContent = l.v; body.appendChild(d);
+    }
+    body.scrollTop = body.scrollHeight;
+    setTimeout(addLine, l.t === 'cmd' ? 220 : 70);
+  }
+
+  const obs = new IntersectionObserver(e => {
+    if (e[0].isIntersecting && !running) { running = true; addLine(); obs.disconnect(); }
+  }, { threshold: 0.3 });
+  const feat = document.querySelector('.featured');
+  if (feat) obs.observe(feat);
+})();
+
 /* ════ SCROLL REVEAL ════ */
 (function(){
   const obs = new IntersectionObserver((entries) => {
