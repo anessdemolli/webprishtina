@@ -1,2439 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>webprishtina | Elite Web Development & Digital Solutions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FAVICON using logo -->
-    <link rel="icon" type="image/png" href="img/logomainwebnb.png">
-    <style>
-        /* === ROOT VARIABLES - PURE BLACK, WHITE TEXT, NEON GREEN ACCENT === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #00FF94;           /* vibrant neon green */
-            --primary-dark: #00CC77;
-            --primary-light: #7AFFB5;
-            --success: #00FF94;
-            --bg-deep: #000000;            /* absolute black */
-            --bg-surface: #0A0A0A;          /* near black for depth */
-            --bg-card: #111111;              /* subtle card background */
-            --text-primary: #FFFFFF;         /* pure white */
-            --text-secondary: #E0E0E0;       /* off-white for secondary */
-            --text-muted: #A0A0A0;           /* gray for muted text */
-            --border-light: #222222;         /* subtle borders */
-            --border-medium: #2A2A2A;
-            --gradient-primary: linear-gradient(135deg, #00FF94, #00CC77);
-            --font-primary: 'Space Grotesk', sans-serif;
-            --font-secondary: 'Inter', sans-serif;
-            --shadow-sm: 0 5px 20px rgba(0, 255, 148, 0.1);
-            --shadow-md: 0 10px 30px rgba(0, 255, 148, 0.15);
-            --shadow-lg: 0 20px 50px rgba(0, 255, 148, 0.2);
-            --shadow-glow: 0 0 30px rgba(0, 255, 148, 0.25);
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-            --border: 1px solid rgba(255, 255, 255, 0.08);
-            --transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            font-family: var(--font-secondary);
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* subtle fixed background glow */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 255, 148, 0.03) 0%, transparent 60%),
-                        radial-gradient(circle at 80% 70%, rgba(0, 255, 148, 0.02) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-primary);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        /* ===== LOGO WATERMARK (background in every section) ===== */
-        .section::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('img/logomainwebnb.png');
-            background-repeat: no-repeat;
-            background-position: center 40%;
-            background-size: 400px auto;
-            opacity: 0.06;
-            pointer-events: none;
-            z-index: 0;
-            transform: translateY(-5%);
-        }
-
-        .section > .container,
-        .section > .hero-container,
-        .section > *:not(.hero-moving-bg):not(.hero-particles):not(.hero-glow) {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero::after {
-            opacity: 0.04;
-            background-size: 500px auto;
-        }
-        .sponsors::after, .footer::after, .featured-project::after, .faq-section::after {
-            display: none;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 3;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            margin-bottom: 1rem;
-            font-family: var(--font-primary);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .text-gradient {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .text-primary {
-            color: var(--primary);
-        }
-
-        /* highlight with light green square behind (low opacity) */
-        .highlight-box {
-            background: rgba(0, 255, 148, 0.15);
-            padding: 0.1rem 0.4rem;
-            border-radius: 8px;
-            display: inline-block;
-            font-weight: 700;
-        }
-
-        /* === BUTTONS === */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 36px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font-primary);
-            letter-spacing: 0.5px;
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-medium);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--bg-deep);
-            border: none;
-            box-shadow: 0 10px 25px rgba(0, 255, 148, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 255, 148, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 255, 148, 0.1);
-            border-color: var(--primary);
-        }
-
-        /* === HEADER - only logo (no text) === */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 20px 0;
-            background: transparent;
-            transition: var(--transition);
-        }
-
-        .header.scrolled {
-            padding: 12px 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            height: 50px;
-            width: auto;
-            filter: brightness(0) invert(1); /* make black logo white on dark bg */
-            transition: var(--transition);
-        }
-        .logo img:hover {
-            filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--primary));
-        }
-
-        /* === HAMBURGER MENU === */
-        .menu-toggle {
-            width: 50px;
-            height: 50px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: var(--border);
-            transition: var(--transition);
-            z-index: 1001;
-        }
-
-        .menu-toggle:hover {
-            background: var(--primary);
-        }
-
-        .menu-toggle:hover i {
-            color: var(--bg-deep);
-        }
-
-        .menu-toggle i {
-            font-size: 1.3rem;
-            color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .menu-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 350px;
-            height: 100vh;
-            background: var(--bg-surface);
-            z-index: 1000;
-            padding: 100px 30px 30px;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-lg);
-            border-left: 1px solid var(--border-light);
-        }
-
-        .menu-panel.active {
-            right: 0;
-        }
-
-        .menu-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: var(--border);
-            transition: var(--transition);
-        }
-
-        .menu-close:hover {
-            background: var(--primary);
-            color: var(--bg-deep);
-        }
-
-        .menu-links {
-            list-style: none;
-            margin-top: 30px;
-        }
-
-        .menu-link {
-            margin-bottom: 15px;
-        }
-
-        .menu-link a {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            background: var(--bg-deep);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-weight: 500;
-            transition: var(--transition);
-            border: 1px solid var(--border-light);
-        }
-
-        .menu-link a i {
-            width: 25px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .menu-link a:hover {
-            background: rgba(0, 255, 148, 0.1);
-            border-color: var(--primary);
-            transform: translateX(-5px);
-        }
-
-        /* === HERO === */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::after {
-            opacity: 0.04;
-            background-size: 600px auto;
-            background-position: center 30%;
-        }
-
-        .hero-moving-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            white-space: nowrap;
-            font-family: var(--font-primary);
-            font-size: clamp(4rem, 15vw, 10rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            color: rgba(0, 255, 148, 0.03);
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .hero-moving-bg span {
-            display: inline-block;
-            padding-right: 2rem;
-            animation: scrollBg 50s linear infinite;
-        }
-
-        @keyframes scrollBg {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .hero-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .hero-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.2;
-            animation: floatParticle 20s infinite linear;
-        }
-
-        @keyframes floatParticle {
-            from { transform: translateY(100vh) rotate(0deg); }
-            to { transform: translateY(-100vh) rotate(360deg); }
-        }
-
-        .hero-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 255, 148, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            animation: glowPulse 5s infinite;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        .hero-container {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .hero-stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .hero-stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 25px 35px;
-            text-align: center;
-            transition: var(--transition);
-            min-width: 180px;
-        }
-
-        .hero-stat-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .hero-stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-family: var(--font-primary);
-            margin-bottom: 5px;
-        }
-
-        .hero-stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .hero-stat-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .floating-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 50px;
-        }
-
-        .floating-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            width: 260px;
-            text-align: left;
-            transition: var(--transition);
-        }
-
-        .floating-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .floating-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .floating-card-icon {
-            width: 45px;
-            height: 45px;
-            background: rgba(0, 255, 148, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-
-        .floating-card h4 {
-            font-size: 1.1rem;
-            margin: 0;
-            color: var(--text-primary);
-        }
-
-        .floating-card p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .floating-card .trend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 10px;
-            color: var(--primary);
-            font-size: 0.85rem;
-        }
-
-        .sponsors {
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            padding: 30px 0;
-            overflow: hidden;
-        }
-
-        .marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 30s linear infinite;
-        }
-
-        .marquee:hover {
-            animation-play-state: paused;
-        }
-
-        .marquee-content {
-            display: flex;
-            gap: 60px;
-            padding: 0 30px;
-        }
-
-        .sponsor-item {
-            font-family: var(--font-primary);
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            white-space: nowrap;
-            transition: var(--transition);
-            letter-spacing: 1px;
-        }
-
-        .sponsor-item:hover {
-            color: var(--primary);
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .fade-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .service-card, .project-card, .news-card, .stat-box, .about-feature, .model-container, .floating-card, .hero-stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            transition: var(--transition);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-        }
-
-        .service-card:hover, .project-card:hover, .news-card:hover, .stat-box:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .scroll-container {
-            position: relative;
-            margin: 40px 0;
-        }
-
-        .scroll-wrapper {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            padding: 20px 0;
-        }
-
-        .scroll-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scroll-content {
-            display: flex;
-            gap: 25px;
-            width: max-content;
-        }
-
-        .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            z-index: 10;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .scroll-arrow:hover {
-            background: var(--primary);
-            color: var(--bg-deep);
-            border-color: var(--primary);
-        }
-
-        .scroll-arrow.left {
-            left: -25px;
-        }
-
-        .scroll-arrow.right {
-            right: -25px;
-        }
-
-        .service-card {
-            padding: 40px 30px;
-            min-width: 350px;
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(0, 255, 148, 0.1);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 25px;
-        }
-
-        .service-features {
-            list-style: none;
-        }
-
-        .service-features li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-        }
-
-        .service-features li i {
-            color: var(--primary);
-        }
-        /* Verified tick in service cards */
-        .service-features li i.fa-check-circle {
-            color: var(--primary);
-            filter: drop-shadow(0 0 5px var(--primary));
-        }
-
-        .featured-project {
-            background: var(--bg-surface);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-xl);
-            padding: 60px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .featured-project::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,255,148,0.1) 0%, transparent 70%);
-            animation: rotateSlow 20s linear infinite;
-        }
-
-        @keyframes rotateSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .featured-project-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: rgba(0,255,148,0.1);
-            border: 1px solid var(--border-light);
-            border-radius: 50px;
-            color: var(--primary);
-            margin: 20px 0;
-            transition: var(--transition);
-        }
-
-        .project-link:hover {
-            background: var(--primary);
-            color: var(--bg-deep);
-            border-color: var(--primary);
-        }
-
-        .testimonial-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 6rem;
-            color: var(--primary);
-            opacity: 0.2;
-            font-family: Georgia, serif;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--bg-deep);
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .testimonial-verified {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        .showcase-card {
-            background: var(--gradient-primary);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            text-align: center;
-            color: var(--bg-deep);
-        }
-
-        .showcase-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .showcase-stat-value {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--bg-deep);
-        }
-
-        .projects-filter {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 10px 25px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 50px;
-            color: var(--text-primary);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--primary);
-            color: var(--bg-deep);
-            border-color: var(--primary);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            overflow: hidden;
-        }
-
-        .project-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 6px 16px;
-            background: var(--primary);
-            border-radius: 50px;
-            color: var(--bg-deep);
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .project-image {
-            height: 220px;
-            background: #1A1A1A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--primary);
-        }
-
-        .project-content {
-            padding: 30px;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .tech-tag {
-            padding: 4px 12px;
-            background: rgba(0, 255, 148, 0.1);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: var(--primary);
-        }
-
-        .project-stats {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-light);
-            margin-top: 20px;
-        }
-
-        .project-stat-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .project-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .news-section {
-            background: var(--bg-deep);
-        }
-
-        .news-scroll-container {
-            position: relative;
-            margin: 40px 0;
-        }
-
-        .news-wrapper {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            padding: 20px 0;
-        }
-
-        .news-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .news-content {
-            display: flex;
-            gap: 25px;
-            width: max-content;
-        }
-
-        .news-card {
-            width: 340px;
-            padding: 30px;
-            cursor: pointer;
-        }
-
-        .news-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .news-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
-
-        .news-expand {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            background: rgba(0, 255, 148, 0.02);
-            border-radius: var(--radius-sm);
-            margin-top: 10px;
-        }
-
-        .news-card.expanded .news-expand {
-            max-height: 250px;
-            padding: 15px;
-            border-top: 1px solid var(--primary);
-        }
-
-        .news-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--primary);
-            z-index: 10;
-        }
-
-        .news-arrow:hover {
-            background: var(--primary);
-            color: var(--bg-deep);
-        }
-
-        .news-arrow.left { left: -10px; }
-        .news-arrow.right { right: -10px; }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .about-feature {
-            display: flex;
-            gap: 15px;
-            padding: 25px;
-        }
-
-        .about-feature-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 255, 148, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stat-box {
-            padding: 25px 15px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .model-container {
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .model-container i {
-            font-size: 5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .faq-section {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            padding: 60px;
-        }
-
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .faq-item {
-            background: var(--bg-deep);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .faq-item:hover {
-            border-color: var(--primary);
-        }
-
-        .faq-question {
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .faq-question:hover {
-            background: rgba(0, 255, 148, 0.02);
-        }
-
-        .faq-question h4 {
-            margin: 0;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--text-primary);
-        }
-
-        .faq-question i {
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-
-        .faq-toggle {
-            width: 36px;
-            height: 36px;
-            background: rgba(0, 255, 148, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-            background: var(--primary);
-            color: var(--bg-deep);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            padding: 0 25px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 25px 25px 25px;
-        }
-
-        .faq-answer p {
-            margin: 0;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .contact-enhanced {
-            background: var(--gradient-primary);
-            border-radius: var(--radius-xl);
-            padding: 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-enhanced h2 {
-            color: var(--bg-deep);
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
-
-        .contact-enhanced p {
-            color: rgba(0, 0, 0, 0.7);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-
-        .contact-buttons .btn {
-            min-width: 200px;
-            background: var(--bg-deep);
-            color: var(--primary);
-            border: none;
-        }
-
-        .contact-buttons .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .contact-info-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-            color: var(--bg-deep);
-            flex-wrap: wrap;
-        }
-
-        .contact-info-row div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        .footer {
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-light);
-            padding-top: 60px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        .footer-logo img {
-            height: 40px;
-            filter: brightness(0) invert(1);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background: var(--bg-deep);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--primary);
-            color: var(--bg-deep);
-        }
-
-        .footer-bottom {
-            padding: 20px 0;
-            border-top: 1px solid var(--border-light);
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        /* AI chatbot - smaller for mobile and desktop */
-        .ai-chatbot {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 999;
-        }
-
-        .chatbot-button {
-            width: 56px;
-            height: 56px;
-            background: var(--bg-card);
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow-glow);
-            transition: var(--transition);
-            padding: 4px;
-        }
-        .chatbot-button img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: brightness(0) invert(1) drop-shadow(0 0 5px var(--primary));
-        }
-        .chatbot-button:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .chatbot-window {
-            position: absolute;
-            bottom: 70px;
-            left: 0;
-            width: 300px;
-            background: var(--bg-card);
-            border: 1px solid var(--primary);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: none;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .chatbot-window.active {
-            display: block;
-        }
-
-        .chatbot-header {
-            background: var(--gradient-primary);
-            padding: 15px;
-            color: var(--bg-deep);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .chatbot-header img {
-            height: 30px;
-            width: 30px;
-            filter: brightness(0);
-        }
-        .chatbot-header h4 {
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .chatbot-messages {
-            padding: 15px;
-            max-height: 260px;
-            overflow-y: auto;
-            background: var(--bg-deep);
-        }
-
-        .chatbot-message.bot p {
-            background: var(--bg-card);
-            padding: 10px;
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            border: 1px solid var(--border-light);
-            font-size: 0.9rem;
-        }
-
-        .chatbot-message.user p {
-            background: var(--primary);
-            color: var(--bg-deep);
-            padding: 10px;
-            border-radius: var(--radius-md);
-            display: inline-block;
-            font-size: 0.9rem;
-        }
-
-        .chatbot-input {
-            display: flex;
-            padding: 12px;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-light);
-        }
-
-        .chatbot-input input {
-            flex: 1;
-            padding: 10px;
-            background: var(--bg-deep);
-            border: 1px solid var(--border-light);
-            border-radius: 25px;
-            color: var(--text-primary);
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .chatbot-input button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: none;
-            color: var(--bg-deep);
-            margin-left: 8px;
-            cursor: pointer;
-        }
-
-        /* Mobile fixes for featured project and service cards */
-        @media (max-width: 992px) {
-            .hero-container,
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .scroll-arrow,
-            .news-arrow {
-                display: none;
-            }
-            .contact-enhanced {
-                padding: 40px 20px;
-            }
-            .faq-grid {
-                grid-template-columns: 1fr;
-            }
-            /* Fix featured project grid on mobile */
-            .featured-project-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .featured-project {
-                padding: 30px 20px;
-            }
-            .featured-project h2 {
-                font-size: 2.2rem !important;
-            }
-            /* service cards scrollable on mobile without arrows (already hidden) */
-            .service-card {
-                min-width: 280px;
-                padding: 30px 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 3rem;
-            }
-            .section-title {
-                font-size: 2.5rem;
-            }
-            .hero-stats-grid {
-                flex-direction: column;
-                align-items: center;
-            }
-            .hero-stat-card {
-                width: 100%;
-                max-width: 300px;
-            }
-            .floating-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-            .floating-card {
-                width: 100%;
-                max-width: 300px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .menu-panel {
-                width: 100%;
-                right: -100%;
-            }
-            /* featured project further adjustments */
-            .featured-project h2 {
-                font-size: 1.8rem !important;
-            }
-            .showcase-card {
-                padding: 25px;
-            }
-            .showcase-stats {
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .featured-project h2 {
-                font-size: 1.6rem !important;
-            }
-            .testimonial-card {
-                padding: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="webprishtina — Digital Agency. Web Development, Social Media & Brand Strategy in Prishtina, Kosovo."/>
+  <title>webprishtina | Digital Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" type="image/png" href="img/logo.png"/>
+  <link rel="apple-touch-icon" href="img/logo.png"/>
+  <link rel="preload" as="image" href="img/logo.png"/>
+  <script type="text/javascript">
+    (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const namespace=ar[1];api.q=api.q||[];typeof namespace==="string"?(cal.ns[namespace]=api)&&p(api,ar):p(cal,ar);return}p(cal,ar)})(window,"https://app.cal.com/embed/embed.js","init");
+    Cal("init",{origin:"https://cal.com"});
+  </script>
 </head>
 <body>
-    <!-- Header - only logo -->
-    <header class="header" id="header">
-        <div class="container header-container">
-            <a href="#home" class="logo">
-                <img src="img/logomainwebnb.png" alt="webprishtina">
-            </a>
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </header>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay"></div>
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <img src="img/logo.png" alt="webprishtina" class="logo-img"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"     class="nav-link">Home</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#about"    class="nav-link">About</a></li>
+      <li><a href="#faq"      class="nav-link">FAQ</a></li>
+      <li><a href="#contact"  class="nav-link">Contact</a></li>
+      <li><a href="#ai-news"  class="nav-link">AI News</a></li>
+      <li class="nav-cta-mobile"><a href="#contact" class="btn-nav-cta">Get Started</a></li>
+    </ul>
+    <a href="#contact" class="btn-nav-cta btn-nav-cta-desk">Get Started</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-    <!-- Menu Panel -->
-    <div class="menu-panel" id="menuPanel">
-        <div class="menu-close" id="menuClose">
-            <i class="fas fa-times"></i>
-        </div>
-        <ul class="menu-links">
-            <li class="menu-link"><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-            <li class="menu-link"><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
-            <li class="menu-link"><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
-            <li class="menu-link"><a href="#about"><i class="fas fa-users"></i> About</a></li>
-            <li class="menu-link"><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-            <li class="menu-link"><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-            <li class="menu-link"><a href="#news"><i class="fas fa-newspaper"></i> AI News</a></li>
-        </ul>
+<!-- ══════════════ HERO ══════════════ -->
+<section id="home" class="hero section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span>Prishtina, Kosovo</span>
+      <span class="edot"></span>
+      <span>Est. 2021</span>
+      <span class="edot"></span>
+      <span>247 Projects</span>
     </div>
-
-    <!-- Hero Section -->
-    <section class="section hero" id="home">
-        <div class="hero-moving-bg">
-            <span>WEB DEVELOPMENT • SOCIAL MEDIA MARKETING • MANAGEMENT • LOGO • BRANDING • DIGITAL MARKETING • </span>
-        </div>
-        <div class="hero-particles" id="particles"></div>
-        <div class="hero-glow"></div>
-        
-        <div class="container hero-container">
-            <div class="hero-content">
-                <h1>Transforming Ideas into Digital <span class="highlight-box">Masterpieces</span></h1>
-                <p>webprishtina delivers cutting-edge web solutions, social media management, and digital marketing strategies with unparalleled performance and stunning design.</p>
-                
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Apply for Partnership</a>
-                    <a href="#featured" class="btn btn-outline">See How It Works → 99% success rate</a>
-                </div>
-                
-                <div class="hero-stats-grid">
-                    <div class="hero-stat-card fade-up">
-                        <div class="hero-stat-icon"><i class="fas fa-code-branch"></i></div>
-                        <div class="hero-stat-value counter" data-target="247">0</div>
-                        <div class="hero-stat-label">Projects Completed</div>
-                    </div>
-                    <div class="hero-stat-card fade-up">
-                        <div class="hero-stat-icon"><i class="fas fa-chart-line"></i></div>
-                        <div class="hero-stat-value">$27,000+</div>
-                        <div class="hero-stat-label">Ad Spend Managed</div>
-                    </div>
-                    <div class="hero-stat-card fade-up">
-                        <div class="hero-stat-icon"><i class="fas fa-eye"></i></div>
-                        <div class="hero-stat-value counter" data-target="300">0</div>
-                        <div class="hero-stat-label">Million+ Views</div>
-                    </div>
-                    <div class="hero-stat-card fade-up">
-                        <div class="hero-stat-icon"><i class="fas fa-star"></i></div>
-                        <div class="hero-stat-value">4.5/5</div>
-                        <div class="hero-stat-label">Client Rating</div>
-                    </div>
-                </div>
-                
-                <div class="floating-cards">
-                    <div class="floating-card fade-up">
-                        <div class="floating-card-header">
-                            <div class="floating-card-icon"><i class="fas fa-bolt"></i></div>
-                            <h4>Lightning Fast</h4>
-                        </div>
-                        <p>99.9% uptime guarantee</p>
-                        <div class="trend"><i class="fas fa-arrow-up"></i> +15% faster</div>
-                    </div>
-                    <div class="floating-card fade-up">
-                        <div class="floating-card-header">
-                            <div class="floating-card-icon"><i class="fas fa-chart-pie"></i></div>
-                            <h4>Data Driven</h4>
-                        </div>
-                        <p>Real-time analytics</p>
-                        <div class="trend"><i class="fas fa-arrow-up"></i> +23% better ROI</div>
-                    </div>
-                    <div class="floating-card fade-up">
-                        <div class="floating-card-header">
-                            <div class="floating-card-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h4>Fully Responsive</h4>
-                        </div>
-                        <p>Perfect on all devices</p>
-                        <div class="trend"><i class="fas fa-arrow-up"></i> +40% mobile</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Moving Sponsors Marquee -->
-    <div class="sponsors">
-        <div class="marquee">
-            <div class="marquee-content">
-                <span class="sponsor-item">TECHVISION</span>
-                <span class="sponsor-item">NEXUSLAB</span>
-                <span class="sponsor-item">CODEVERSE</span>
-                <span class="sponsor-item">AIRE</span>
-                <span class="sponsor-item">STACKFLOW</span>
-                <span class="sponsor-item">OMNICORE</span>
-                <span class="sponsor-item">QUANTUM</span>
-                <span class="sponsor-item">ZENITH</span>
-            </div>
-            <div class="marquee-content">
-                <span class="sponsor-item">TECHVISION</span>
-                <span class="sponsor-item">NEXUSLAB</span>
-                <span class="sponsor-item">CODEVERSE</span>
-                <span class="sponsor-item">AIRE</span>
-                <span class="sponsor-item">STACKFLOW</span>
-                <span class="sponsor-item">OMNICORE</span>
-                <span class="sponsor-item">QUANTUM</span>
-                <span class="sponsor-item">ZENITH</span>
-            </div>
-        </div>
+    <h1 class="hero-heading">
+      <span class="hl">TRANSFORMING</span>
+      <span class="hl hl-alt">IDEAS <span class="hl-outline">INTO</span></span>
+      <span class="hl hl-type"><span id="typewriter"></span><span class="blink">_</span></span>
+    </h1>
+    <p class="hero-sub">Full-service digital agency delivering cutting-edge web solutions,<br class="br-hide"> social media strategy, and brand identities that perform.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Apply for Partnership →</a>
+      <a href="#projects" class="btn-outline">View Our Work <span class="obadge">247+</span></a>
     </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hnum" data-target="247">0</span><span class="hlbl">Projects</span></div>
+    <div class="hsep"></div>
+    <div class="hstat"><span class="hnum" data-target="27" data-prefix="$" data-suffix="K+">0</span><span class="hlbl">Ad Spend</span></div>
+    <div class="hsep"></div>
+    <div class="hstat"><span class="hnum" data-target="300" data-suffix="M+">0</span><span class="hlbl">Views</span></div>
+    <div class="hsep"></div>
+    <div class="hstat"><span class="hnum" data-target="4.5" data-suffix="/5" data-dec="1">0</span><span class="hlbl">Rating</span></div>
+    <div class="hsep"></div>
+    <div class="hstat"><span class="hnum" data-target="99" data-suffix="%">0</span><span class="hlbl">Success Rate</span></div>
+  </div>
+</section>
 
-    <!-- Featured Project - Master Service Chef -->
-    <section class="section" id="featured">
-        <div class="container">
-            <div class="featured-project">
-                <div class="featured-project-grid">
-                    <div>
-                        <span style="display:inline-block; padding:8px 20px; background:var(--primary); color:var(--bg-deep); border-radius:50px; font-size:0.9rem; margin-bottom:20px; font-weight:600;">⭐ LATEST PROJECT</span>
-                        <h2 style="font-size:3rem;">Master Service Chef <span class="text-gradient">on RTK</span></h2>
-                        <p style="color:var(--text-secondary); font-size:1.1rem;">A groundbreaking culinary competition produced for RTK Television. Full-service production including web platform, social media management, and digital marketing strategy that reached over 1M viewers.</p>
-                        
-                        <a href="https://masterservicechef.com/" target="_blank" class="project-link">
-                            <i class="fas fa-globe"></i> masterservicechef.com
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
 
-                        <div class="testimonial-card">
-                            <p style="font-style:italic; font-size:1rem;">"webprishtina proved to be an outstanding partner for Master Service Chef's digital presence. Through a well-defined and data-driven strategy, they significantly increased audience engagement and delivered measurable improvements in viewership."</p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">VD</div>
-                                <div>
-                                    <h4 style="margin-bottom:5px;">Visar Demolli</h4>
-                                    <p style="color:var(--text-muted); margin:0;">CEO, Master Service Chef</p>
-                                    <div class="testimonial-verified">
-                                        <i class="fas fa-check-circle"></i> Verified Result
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="showcase-card">
-                            <i class="fas fa-tv" style="font-size:4rem; margin-bottom:20px;"></i>
-                            <h3 style="color:var(--bg-deep); font-size:2rem;">Master Service Chef</h3>
-                            <p style="color:rgba(0,0,0,0.7);">RTK Television • Season 2</p>
-                            <div class="showcase-stats">
-                                <div class="showcase-stat">
-                                    <div class="showcase-stat-value">1M+</div>
-                                    <div>Viewers</div>
-                                </div>
-                                <div class="showcase-stat">
-                                    <div class="showcase-stat-value">4.8</div>
-                                    <div>Rating</div>
-                                </div>
-                                <div class="showcase-stat">
-                                    <div class="showcase-stat-value">50+</div>
-                                    <div>Episodes</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- ══════════════ FEATURED PROJECT ══════════════ -->
+<section class="featured section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="feat-wrap reveal">
+      <div class="feat-left">
+        <div class="slabel">⭐ LATEST PROJECT</div>
+        <h2 class="feat-title">Master Service Chef on RTK</h2>
+        <p class="feat-desc">A groundbreaking culinary competition produced for RTK Television. Full-service production including web platform, social media management, and digital marketing strategy that reached over 1M viewers.</p>
+        <a href="https://masterservicechef.com" target="_blank" rel="noopener" class="feat-link">masterservicechef.com ↗</a>
+        <blockquote class="testimonial">
+          <p>"webprishtina proved to be an outstanding partner for Master Service Chef's digital presence. Through a well-defined and data-driven strategy, they significantly increased audience engagement and delivered measurable improvements in viewership."</p>
+          <footer class="tfoot">
+            <div class="tavatar">VD</div>
+            <div class="tinfo">
+              <strong>Visar Demolli</strong>
+              <span>CEO, Master Service Chef</span>
             </div>
+            <div class="tverified">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+      <div class="feat-right">
+        <div class="feat-card">
+          <div class="feat-card-head">
+            <span class="feat-card-name">Master Service Chef</span>
+            <span class="feat-card-sub">RTK Television • Season 2</span>
+          </div>
+          <div class="feat-metrics">
+            <div class="fmet"><span class="fmet-n">1M+</span><span class="fmet-l">Viewers</span></div>
+            <div class="fmet"><span class="fmet-n">4.8</span><span class="fmet-l">Rating</span></div>
+            <div class="fmet"><span class="fmet-n">50+</span><span class="fmet-l">Episodes</span></div>
+          </div>
+          <div class="feat-img">
+            <img src="https://api.microlink.io/?url=https://masterservicechef.com&screenshot=true&meta=false&embed=screenshot.url" alt="Master Service Chef" loading="lazy"/>
+            <div class="feat-img-grad"></div>
+          </div>
         </div>
-    </section>
-
-    <!-- Services Section with verified ticks -->
-    <section class="section" id="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our <span class="highlight-box">Services</span></h2>
-                <p class="section-subtitle">Comprehensive digital solutions tailored to your business needs.</p>
-            </div>
-            
-            <div class="scroll-container">
-                <div class="scroll-arrow left" onclick="scrollServices('left')">
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="scroll-arrow right" onclick="scrollServices('right')">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
-                
-                <div class="scroll-wrapper" id="servicesWrapper">
-                    <div class="scroll-content">
-                        <!-- Web Development with verified -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-code"></i></div>
-                            <h3>Web Development <i class="fas fa-check-circle" style="color:var(--primary); margin-left:8px;"></i></h3>
-                            <p>Custom websites and web applications built with modern technologies and frameworks.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> Responsive Design</li>
-                                <li><i class="fas fa-check-circle"></i> E-commerce Solutions</li>
-                                <li><i class="fas fa-check-circle"></i> CMS Integration</li>
-                                <li><i class="fas fa-check-circle"></i> API Development</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Social Media Marketing -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-hashtag"></i></div>
-                            <h3>Social Media Marketing <i class="fas fa-check-circle" style="color:var(--primary);"></i></h3>
-                            <p>Strategic campaigns that drive engagement, followers, and conversions.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> Content Strategy</li>
-                                <li><i class="fas fa-check-circle"></i> Ad Campaigns</li>
-                                <li><i class="fas fa-check-circle"></i> Influencer Marketing</li>
-                                <li><i class="fas fa-check-circle"></i> Analytics & Reporting</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Social Media Management -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-users"></i></div>
-                            <h3>Social Media Management <i class="fas fa-check-circle" style="color:var(--primary);"></i></h3>
-                            <p>Complete management of your social media presence across all platforms.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> Daily Posting</li>
-                                <li><i class="fas fa-check-circle"></i> Community Engagement</li>
-                                <li><i class="fas fa-check-circle"></i> Content Creation</li>
-                                <li><i class="fas fa-check-circle"></i> Growth Strategies</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Logo & Branding -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
-                            <h3>Logo & Branding <i class="fas fa-check-circle" style="color:var(--primary);"></i></h3>
-                            <p>Professional logo design and complete brand identity development.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> Logo Design</li>
-                                <li><i class="fas fa-check-circle"></i> Brand Guidelines</li>
-                                <li><i class="fas fa-check-circle"></i> Stationery Design</li>
-                                <li><i class="fas fa-check-circle"></i> Visual Identity</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Graphic Design -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
-                            <h3>Graphic Design <i class="fas fa-check-circle" style="color:var(--primary);"></i></h3>
-                            <p>Eye-catching designs for all your marketing and business needs.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> Social Media Graphics</li>
-                                <li><i class="fas fa-check-circle"></i> Marketing Materials</li>
-                                <li><i class="fas fa-check-circle"></i> Print Design</li>
-                                <li><i class="fas fa-check-circle"></i> Brand Assets</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Digital Marketing -->
-                        <div class="service-card fade-up">
-                            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                            <h3>Digital Marketing <i class="fas fa-check-circle" style="color:var(--primary);"></i></h3>
-                            <p>Data-driven marketing strategies that maximize ROI.</p>
-                            <ul class="service-features">
-                                <li><i class="fas fa-check-circle"></i> SEO/SEM</li>
-                                <li><i class="fas fa-check-circle"></i> PPC Advertising</li>
-                                <li><i class="fas fa-check-circle"></i> Email Marketing</li>
-                                <li><i class="fas fa-check-circle"></i> Conversion Optimization</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section - Full restored -->
-    <section class="section" id="projects">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured <span class="highlight-box">Projects</span></h2>
-                <p class="section-subtitle">Explore our portfolio of innovative solutions across various industries.</p>
-            </div>
-            
-            <div class="projects-grid" id="projectsGrid"></div>
-        </div>
-    </section>
-
-    <!-- About Section - Full restored -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About <span class="highlight-box">webprishtina</span></h2>
-                <p class="section-subtitle">Pioneering digital excellence with a team of passionate experts.</p>
-            </div>
-            
-            <div class="about-grid">
-                <div>
-                    <h2 style="font-size:2.8rem;">We Transform <span class="text-gradient">Vision into Reality</span></h2>
-                    <p style="color:var(--text-secondary);">webprishtina was founded with a simple mission: to create digital experiences that not only look stunning but also deliver measurable business results. We've evolved into a full-service digital agency with expertise spanning from concept to deployment.</p>
-                    
-                    <div class="about-features">
-                        <div class="about-feature fade-up">
-                            <div class="about-feature-icon"><i class="fas fa-users"></i></div>
-                            <div><h4>Expert Team</h4><p style="color:var(--text-muted);">5+ years experience</p></div>
-                        </div>
-                        <div class="about-feature fade-up">
-                            <div class="about-feature-icon"><i class="fas fa-award"></i></div>
-                            <div><h4>Award Winning</h4><p style="color:var(--text-muted);">Innovation leader</p></div>
-                        </div>
-                        <div class="about-feature fade-up">
-                            <div class="about-feature-icon"><i class="fas fa-handshake"></i></div>
-                            <div><h4>Client-Centric</h4><p style="color:var(--text-muted);">100% satisfaction</p></div>
-                        </div>
-                        <div class="about-feature fade-up">
-                            <div class="about-feature-icon"><i class="fas fa-sync-alt"></i></div>
-                            <div><h4>Agile Approach</h4><p style="color:var(--text-muted);">Flexible methodology</p></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="model-container fade-up">
-                        <i class="fas fa-cube"></i>
-                        <h3>Interactive 3D Model</h3>
-                        <p style="color:var(--text-muted);">Our advanced visualization technology</p>
-                    </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-box fade-up">
-                            <div class="stat-value counter" data-target="5">0</div>
-                            <div class="stat-label">Years</div>
-                        </div>
-                        <div class="stat-box fade-up">
-                            <div class="stat-value counter" data-target="247">0</div>
-                            <div class="stat-label">Projects</div>
-                        </div>
-                        <div class="stat-box fade-up">
-                            <div class="stat-value">$27K+</div>
-                            <div class="stat-label">Ad Spend</div>
-                        </div>
-                        <div class="stat-box fade-up">
-                            <div class="stat-value">300M+</div>
-                            <div class="stat-label">Views</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ SECTION - Full restored -->
-    <section class="section" id="faq">
-        <div class="container">
-            <div class="faq-section">
-                <div style="text-align:center; margin-bottom:40px;">
-                    <h3 style="color:var(--primary); text-transform:uppercase; letter-spacing:2px; font-size:1rem;">HAVE QUESTIONS?</h3>
-                    <h2 style="font-size:3rem;"><span class="highlight-box">FREQUENTLY ASKED QUESTIONS</span></h2>
-                </div>
-                
-                <div class="faq-grid">
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-code"></i> What technologies do you use for web development?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We specialize in modern stacks: React, Next.js, Node.js, Python, and cloud platforms like AWS. For AI integration we leverage TensorFlow, LangChain, and vector databases.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-robot"></i> How do you implement AI in your solutions?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We build custom AI agents, RAG pipelines, and fine-tuned LLMs for automation, customer support, and data analysis. Our expertise includes OpenAI, Claude, and open-source models.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-cloud"></i> Do you offer cloud infrastructure consulting?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Absolutely. We design scalable, secure cloud architectures on AWS, Google Cloud, and Azure. From serverless to Kubernetes, we optimize for performance and cost.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-database"></i> What's your approach to data security?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We follow zero-trust principles, end-to-end encryption, and regular audits. GDPR and SOC2 compliance are baked into our development process.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-chart-line"></i> How do you measure digital marketing ROI?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We use multi-touch attribution, custom dashboards, and predictive analytics. Every campaign is tracked against KPIs like CAC, LTV, and conversion lift.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item fade-up">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <h4><i class="fas fa-clock"></i> What's your typical project timeline?</h4>
-                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Simple websites take 3-5 days, complex AI applications 2-4 weeks, and ongoing marketing campaigns are continuous. We provide detailed timelines during consultation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section - updated contact info -->
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="contact-enhanced">
-                <h2><span class="highlight-box">Ready</span> to Start Your Project?</h2>
-                <p>Get in touch with us today for a free consultation and discuss how we can help transform your digital presence.</p>
-                
-                <div class="contact-buttons">
-                    <a href="tel:+38344366680" class="btn">
-                        <i class="fas fa-phone-alt"></i> Call Now
-                    </a>
-                    <a href="mailto:info@webprishtina.com" class="btn">
-                        <i class="fas fa-envelope"></i> Email Us
-                    </a>
-                    <a href="https://wa.me/38344366680" target="_blank" class="btn">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                </div>
-                
-                <div class="contact-info-row">
-                    <div><i class="fas fa-phone"></i> +383 (44) 366/680</div>
-                    <div><i class="fas fa-envelope"></i> info@webprishtina.com</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Prishtina, Kosovo</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEWS SECTION - 20+ AI/Tech News items -->
-    <section class="section news-section" id="news">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Latest AI & <span class="highlight-box">Tech News - comingsoon</span></h2>
-                <p class="section-subtitle">Stay ahead with 20+ fresh insights — click any box to expand and read more.</p>
-            </div>
-            <div class="news-scroll-container">
-                <div class="news-arrow left" onclick="scrollNews('left')"><i class="fas fa-chevron-left"></i></div>
-                <div class="news-arrow right" onclick="scrollNews('right')"><i class="fas fa-chevron-right"></i></div>
-                <div class="news-wrapper" id="newsWrapper">
-                    <div class="news-content" id="newsContent"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer - full restored with all links -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo"><img src="img/logomainwebnb.png" alt="webprishtina" style="height:40px;"> webprishtina</div>
-                    <p style="color:var(--text-muted);">Creating digital masterpieces that drive business growth and deliver measurable results.</p>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/webprishtina/" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#news">AI News</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4>Services</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Social Media Marketing</a></li>
-                        <li><a href="#">Social Media Management</a></li>
-                        <li><a href="#">Logo & Branding</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4>Support</h4>
-                    <ul class="footer-links">
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2021 webprishtina. All rights reserved.<i class="fas fa-heart" style="color:var(--primary);"></i></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- AI Chatbot with logo - smaller size -->
-    <div class="ai-chatbot">
-        <div class="chatbot-button" onclick="toggleChatbot()">
-            <img src="img/logomainwebnb.png" alt="webprishtina bot">
-        </div>
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <img src="img/logomainwebnb.png" alt="logo" style="height:30px;">
-                <h4>webprishtina AI</h4>
-            </div>
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="chatbot-message bot">
-                    <p>👋 Hi! I'm your webprishtina assistant. How can I help you today?<br><br>
-                    • Web Development (React, Node, Python)<br>
-                    • Social Media Marketing & Management<br>
-                    • Logo & Branding, Graphic Design<br>
-                    • Digital Marketing, SEO, AI solutions<br><br>
-                    Contact: info@webprishtina.com or +38344366680</p>
-                </div>
-            </div>
-            <div class="chatbot-input">
-                <input type="text" id="chatbotInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') sendMessage()">
-                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <script>
-        // Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const menuClose = document.getElementById('menuClose');
-        const menuPanel = document.getElementById('menuPanel');
-        const menuOverlay = document.getElementById('menuOverlay');
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="services" class="services section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="slabel">WHAT WE DO</div>
+      <h2 class="sec-title">Our Services</h2>
+      <p class="sec-sub">Comprehensive digital solutions built for results.</p>
+    </div>
+    <div class="svc-grid">
 
-        menuToggle.addEventListener('click', () => {
-            menuPanel.classList.add('active');
-            menuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <span class="svc-num">01</span>
+        </div>
+        <h3 class="svc-name">Web Development</h3>
+        <p class="svc-desc">Custom websites and web applications built with modern frameworks, optimised for speed and conversion.</p>
+        <div class="svc-tags">
+          <span>Responsive Design</span><span>E-commerce</span><span>CMS</span><span>API Development</span>
+        </div>
+        <div class="svc-stack">React · Next.js · Node.js · Laravel</div>
+      </div>
 
-        function closeMenu() {
-            menuPanel.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </div>
+          <span class="svc-num">02</span>
+        </div>
+        <h3 class="svc-name">Social Media Marketing</h3>
+        <p class="svc-desc">Strategic paid and organic campaigns that drive real engagement, followers, and measurable conversions.</p>
+        <div class="svc-tags">
+          <span>Content Strategy</span><span>Ad Campaigns</span><span>Influencer</span><span>Analytics</span>
+        </div>
+        <div class="svc-stack">Meta · TikTok · Google · LinkedIn</div>
+      </div>
 
-        menuClose.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <span class="svc-num">03</span>
+        </div>
+        <h3 class="svc-name">Social Media Management</h3>
+        <p class="svc-desc">Full management of your social presence — daily posting, community engagement, and growth strategies.</p>
+        <div class="svc-tags">
+          <span>Daily Posting</span><span>Community</span><span>Content Creation</span><span>Growth</span>
+        </div>
+        <div class="svc-stack">Instagram · Facebook · TikTok · YouTube</div>
+      </div>
 
-        // Particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            if(particlesContainer) {
-                for (let i = 0; i < 50; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'hero-particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 20 + 's';
-                    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                    particlesContainer.appendChild(particle);
-                }
-            }
-        }
-        createParticles();
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <span class="svc-num">04</span>
+        </div>
+        <h3 class="svc-name">Logo & Branding</h3>
+        <p class="svc-desc">Professional logo design and complete brand identity that sets you apart and communicates your values instantly.</p>
+        <div class="svc-tags">
+          <span>Logo Design</span><span>Brand Guidelines</span><span>Stationery</span><span>Visual Identity</span>
+        </div>
+        <div class="svc-stack">Illustrator · Figma · Brand Systems</div>
+      </div>
 
-        // Scroll Functions
-        window.scrollServices = function(direction) {
-            const wrapper = document.getElementById('servicesWrapper');
-            const scrollAmount = 400;
-            wrapper.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount;
-        };
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <span class="svc-num">05</span>
+        </div>
+        <h3 class="svc-name">Graphic Design</h3>
+        <p class="svc-desc">Eye-catching visuals for every channel — social graphics, print materials, and marketing assets that convert.</p>
+        <div class="svc-tags">
+          <span>Social Graphics</span><span>Print Design</span><span>Marketing</span><span>Brand Assets</span>
+        </div>
+        <div class="svc-stack">Photoshop · Figma · After Effects</div>
+      </div>
 
-        window.scrollNews = function(direction) {
-            const wrapper = document.getElementById('newsWrapper');
-            const scrollAmount = 350;
-            wrapper.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount;
-        };
+      <div class="svc-card reveal">
+        <div class="svc-top">
+          <div class="svc-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="svc-num">06</span>
+        </div>
+        <h3 class="svc-name">Digital Marketing</h3>
+        <p class="svc-desc">Data-driven strategies across all channels that maximise ROI and turn visitors into loyal customers.</p>
+        <div class="svc-tags">
+          <span>SEO / SEM</span><span>PPC</span><span>Email Marketing</span><span>Conversion</span>
+        </div>
+        <div class="svc-stack">Google Analytics · GA4 · Meta Pixel</div>
+      </div>
 
-        // Generate 22 AI/Tech news items (20+)
-        const newsContainer = document.getElementById('newsContent');
-        const newsTopics = [
-            'GPT-5 Architecture', 'Quantum Machine Learning', 'Neural Interface', 'Autonomous Agents',
-            'Edge AI', 'Multimodal Models', 'AI Ethics', 'Synthetic Data', 'RAG Optimization',
-            'Vector Databases', 'AI Hardware', 'Federated Learning', 'Green AI', 'AI Governance',
-            'Computer Vision', 'NLP Breakthroughs', 'AI in Healthcare', 'Robotics', 'AGI Safety',
-            'AI Regulations', 'Deep Learning', 'Reinforcement Learning'
-        ];
-        
-        for (let i = 1; i <= 22; i++) {
-            let topic = newsTopics[(i - 1) % newsTopics.length];
-            let card = document.createElement('div');
-            card.className = 'news-card fade-up';
-            card.innerHTML = `
-                <h4>${topic} Update ${i}</h4>
-                <p>New breakthrough in ${topic} ...</p>
-                <div class="news-expand">
-                    <p>In-depth: Researchers just published a paper showing 40% efficiency gain using novel ${topic} techniques. This could reshape industry standards and open new opportunities for early adopters. The technology is expected to reach mainstream within 12-18 months.</p>
-                </div>
-            `;
-            card.addEventListener('click', () => card.classList.toggle('expanded'));
-            newsContainer.appendChild(card);
-        }
+    </div>
+  </div>
+</section>
 
-        // FAQ Toggle
-        window.toggleFAQ = function(element) {
-            const faqItem = element.closest('.faq-item');
-            faqItem.classList.toggle('active');
-            
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem && item.classList.contains('active')) {
-                    item.classList.remove('active');
-                }
-            });
-        };
+<!-- ══════════════ PROJECTS ══════════════ -->
+<section id="projects" class="projects section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="slabel">OUR WORK</div>
+      <h2 class="sec-title">Projects</h2>
+      <p class="sec-sub">Real work delivered. Bold concepts explored.</p>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
 
-        // Chatbot
-        window.toggleChatbot = function() {
-            document.getElementById('chatbotWindow').classList.toggle('active');
-        };
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about" class="about section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-left reveal">
+        <div class="slabel">ABOUT US</div>
+        <h2 class="about-title">
+          Pioneering<br>
+          <span class="at-outline">Digital</span><br>
+          Excellence
+        </h2>
+        <div class="about-logo-mark">
+          <img src="img/logo.png" alt="webprishtina" class="about-logo-img"/>
+          <span>Hyjnesha Ne Front</span>
+        </div>
+      </div>
+      <div class="about-right reveal">
+        <p class="about-lead">We transform vision into reality — from concept to deployment.</p>
+        <p class="about-body">webprishtina was founded with a simple mission: create digital experiences that look stunning and deliver measurable business results. Today we're a full-service digital agency with expertise spanning the entire digital spectrum.</p>
+        <div class="about-badges">
+          <div class="ab">
+            <span class="ab-n">01</span>
+            <div><strong>Expert Team</strong><em>5+ years experience</em></div>
+          </div>
+          <div class="ab">
+            <span class="ab-n">02</span>
+            <div><strong>Award Winning</strong><em>Innovation leader</em></div>
+          </div>
+          <div class="ab">
+            <span class="ab-n">03</span>
+            <div><strong>Client-Centric</strong><em>100% satisfaction</em></div>
+          </div>
+          <div class="ab">
+            <span class="ab-n">04</span>
+            <div><strong>Agile Approach</strong><em>Flexible methodology</em></div>
+          </div>
+        </div>
+        <div class="about-nums">
+          <div class="an"><span class="an-n">5</span><span class="an-l">Years</span></div>
+          <div class="an"><span class="an-n">247</span><span class="an-l">Projects</span></div>
+          <div class="an"><span class="an-n">$27K+</span><span class="an-l">Ad Spend</span></div>
+          <div class="an"><span class="an-n">300M+</span><span class="an-l">Views</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        window.sendMessage = function() {
-            const input = document.getElementById('chatbotInput');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const messages = document.getElementById('chatbotMessages');
-            
-            messages.innerHTML += `
-                <div class="chatbot-message user">
-                    <p>${message}</p>
-                </div>
-            `;
-            
-            input.value = '';
-            
-            setTimeout(() => {
-                messages.innerHTML += `
-                    <div class="chatbot-message bot">
-                        <p>Thanks! I'm here to help with web development, marketing, branding, or anything about webprishtina. For specific inquiries, email info@webprishtina.com</p>
-                    </div>
-                `;
-                messages.scrollTop = messages.scrollHeight;
-            }, 600);
-        };
+<!-- ══════════════ FAQ ══════════════ -->
+<section id="faq" class="faq section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="slabel">HAVE QUESTIONS?</div>
+      <h2 class="sec-title">FAQ</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal"><button class="fq">What technologies do you use?<span class="fqa">+</span></button><div class="fa"><p>React, Next.js, Vue.js, Angular on the frontend. Node.js, Laravel, Python backends. Cloud deployment via Vercel, AWS, and Netlify — fast, scalable, and reliable.</p></div></div>
+      <div class="faq-item reveal"><button class="fq">How do you implement AI in solutions?<span class="fqa">+</span></button><div class="fa"><p>We integrate AI via OpenAI and Claude APIs — chatbots, content tools, predictive analytics, recommendation engines, and automated reporting, all tailored to your needs.</p></div></div>
+      <div class="faq-item reveal"><button class="fq">What's your approach to data security?<span class="fqa">+</span></button><div class="fa"><p>Security built in from day one: OWASP best practices, SSL/TLS, OAuth 2.0/JWT auth, regular vulnerability assessments, and GDPR compliance on all data handling.</p></div></div>
+      <div class="faq-item reveal"><button class="fq">How do you measure digital marketing ROI?<span class="fqa">+</span></button><div class="fa"><p>Comprehensive tracking via GA4, Meta Pixel, and custom events. Every campaign measured against ROAS, CPA, conversion rate — with monthly reports and live dashboards.</p></div></div>
+      <div class="faq-item reveal"><button class="fq">What's your typical project timeline?<span class="fqa">+</span></button><div class="fa"><p>Landing page: 1–2 weeks. Business site: 2–4 weeks. E-commerce: 4–6 weeks. Web app: 6–12 weeks. Branding: 1–2 weeks. Exact timeline given during free consultation.</p></div></div>
+      <div class="faq-item reveal"><button class="fq">Do you offer ongoing support after launch?<span class="fqa">+</span></button><div class="fa"><p>Yes — monthly retainers covering hosting, maintenance, content updates, security patches, and performance optimisation. We're your long-term digital partner.</p></div></div>
+    </div>
+  </div>
+</section>
 
-        // Projects Data - full restored
-        const projects = [
-            {
-                title: "Nexus Financial Dashboard",
-                description: "Financial analytics platform with real-time data visualization and predictive analytics.",
-                category: "saas",
-                technologies: ["React", "Node.js", "D3.js", "Python"],
-                stats: { complexity: 95, satisfaction: 98, timeline: 6 }
-            },
-            {
-                title: "EcoShop E-commerce",
-                description: "Sustainable e-commerce platform with carbon footprint tracking.",
-                category: "ecommerce",
-                technologies: ["Vue.js", "Laravel", "MySQL", "Redis"],
-                stats: { complexity: 88, satisfaction: 96, timeline: 5 }
-            },
-            {
-                title: "HealthTrack Pro",
-                description: "AI-powered fitness tracking application with personalized plans.",
-                category: "mobile",
-                technologies: ["React Native", "Firebase", "TensorFlow"],
-                stats: { complexity: 92, satisfaction: 97, timeline: 8 }
-            },
-            {
-                title: "SmartHome Control",
-                description: "Unified IoT platform for smart home device control.",
-                category: "web",
-                technologies: ["Angular", "Python", "WebSockets", "Docker"],
-                stats: { complexity: 90, satisfaction: 95, timeline: 7 }
-            },
-            {
-                title: "EduLearn Platform",
-                description: "Interactive learning platform with virtual classrooms.",
-                category: "saas",
-                technologies: ["Next.js", "Node.js", "WebRTC", "MongoDB"],
-                stats: { complexity: 85, satisfaction: 94, timeline: 6 }
-            },
-            {
-                title: "Master Service Chef",
-                description: "Digital platform for RTK's culinary competition.",
-                category: "web",
-                technologies: ["React", "Node.js", "Analytics", "Cloud"],
-                stats: { complexity: 96, satisfaction: 99, timeline: 4 }
-            }
-        ];
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact" class="contact section-wl">
+  <div class="wl-bg"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="slabel">LET'S BUILD TOGETHER</div>
+      <h2 class="sec-title">Start Your Project</h2>
+      <p class="sec-sub">Free consultation. No commitment. Just results.</p>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-form-side reveal">
+        <form id="contactForm" class="cform">
+          <input type="hidden" name="access_key" value="459351b0-af74-4859-af4e-dba8221248b6"/>
+          <input type="hidden" name="subject" value="New project enquiry — webprishtina"/>
+          <input type="hidden" name="from_name" value="webprishtina Website"/>
+          <div class="cform-row">
+            <div class="cf"><label>First Name</label><input type="text" name="name" placeholder="Anes" required/></div>
+            <div class="cf"><label>Last Name</label><input type="text" name="lastname" placeholder="Demolli" required/></div>
+          </div>
+          <div class="cf"><label>Email</label><input type="email" name="email" placeholder="you@company.com" required/></div>
+          <div class="cf">
+            <label>Service Needed</label>
+            <select name="service">
+              <option value="">Select a service...</option>
+              <option>Web Development</option>
+              <option>Social Media Marketing</option>
+              <option>Social Media Management</option>
+              <option>Logo & Branding</option>
+              <option>Graphic Design</option>
+              <option>Digital Marketing</option>
+              <option>Full Package</option>
+            </select>
+          </div>
+          <div class="cf"><label>Message</label><textarea name="message" rows="4" placeholder="Tell us about your project..." required></textarea></div>
+          <button type="submit" class="btn-primary btn-full" id="submitBtn">
+            <span id="submitText">Send Message →</span>
+            <span id="submitLoader" style="display:none">Sending...</span>
+          </button>
+          <div id="formSuccess" class="form-ok" style="display:none">Message sent! We'll reply within 24 hours.</div>
+          <div id="formError"   class="form-err" style="display:none">Something went wrong — email us: info@anesdemolli.tech</div>
+        </form>
+      </div>
+      <div class="contact-info-side reveal">
+        <div class="cinfo-items">
+          <a href="tel:+38344366680" class="cinfo-item">
+            <div class="ci-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .04h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><strong>Call Now</strong><em>+383 (44) 366/680</em></div>
+          </a>
+          <a href="mailto:info@anesdemolli.tech" class="cinfo-item">
+            <div class="ci-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><strong>Email Us</strong><em>info@anesdemolli.tech</em></div>
+          </a>
+          <a href="https://wa.me/38344366680" target="_blank" rel="noopener" class="cinfo-item">
+            <div class="ci-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+            <div><strong>WhatsApp</strong><em>+383 (44) 366/680</em></div>
+          </a>
+          <div class="cinfo-item no-hover">
+            <div class="ci-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><strong>Location</strong><em>Prishtina, Kosovo</em></div>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">Book a Free Strategy Call</div>
+          <p>30 minutes, no commitment. Let's talk about your vision.</p>
+          <button data-cal-link="anesdemolli" data-cal-config='{"layout":"month_view"}' class="btn-primary btn-full">Book on Cal.com →</button>
+        </div>
+        <div class="socials-row">
+          <a href="https://github.com/anessdemolli" target="_blank" rel="noopener" class="spill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/anesco" target="_blank" rel="noopener" class="spill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://instagram.com/webprishtina" target="_blank" rel="noopener" class="spill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function getIcon(category) {
-            const icons = { web: 'code', mobile: 'mobile-alt', ecommerce: 'shopping-cart', saas: 'cloud' };
-            return icons[category] || 'code';
-        }
+<!-- ══════════════ AI NEWS ══════════════ -->
+<section id="ai-news" class="ai-news section-wl">
+  <div class="wl-bg wl-invert"><img src="img/logo.png" alt="" class="wl-img"/></div>
+  <div class="container">
+    <div class="sec-head reveal" style="color:#fff">
+      <div class="slabel" style="color:rgba(255,255,255,0.4)">LATEST AI & TECH NEWS</div>
+      <h2 class="sec-title">Stay Ahead</h2>
+      <p class="sec-sub" style="color:rgba(255,255,255,0.45)">Click any card to read more.</p>
+    </div>
+    <div class="news-carousel-wrap reveal">
+      <button class="news-arrow" id="newsPrev">←</button>
+      <div class="news-viewport" id="newsViewport">
+        <div class="news-track" id="newsTrack"></div>
+      </div>
+      <button class="news-arrow" id="newsNext">→</button>
+    </div>
+    <div class="news-dots" id="newsDots"></div>
+  </div>
+</section>
 
-        function renderProjects(filter = 'all') {
-            const grid = document.getElementById('projectsGrid');
-            const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
-            
-            grid.innerHTML = filtered.map(p => `
-                <div class="project-card fade-up">
-                    <div class="project-badge">${p.category.toUpperCase()}</div>
-                    <div class="project-image">
-                        <i class="fas fa-${getIcon(p.category)}"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>${p.title}</h3>
-                        <p style="color:var(--text-muted);">${p.description}</p>
-                        <div class="project-tech">
-                            ${p.technologies.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-                        </div>
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <div class="project-stat-value">${p.stats.complexity}%</div>
-                                <div class="project-stat-label">Complexity</div>
-                            </div>
-                            <div class="project-stat">
-                                <div class="project-stat-value">${p.stats.satisfaction}%</div>
-                                <div class="project-stat-label">Satisfaction</div>
-                            </div>
-                            <div class="project-stat">
-                                <div class="project-stat-value">${p.stats.timeline}m</div>
-                                <div class="project-stat-label">Timeline</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="footer-logo"><img src="img/logo.png" alt="webprishtina" class="logo-img logo-sm"/></a>
+        <p>Creating digital masterpieces that drive business growth and deliver measurable results.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/anessdemolli" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/anesco" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://instagram.com/webprishtina" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="fcol">
+          <h4>Navigation</h4>
+          <a href="#home">Home</a><a href="#services">Services</a><a href="#projects">Projects</a>
+          <a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="#ai-news">AI News</a>
+        </div>
+        <div class="fcol">
+          <h4>Services</h4>
+          <a href="#services">Web Development</a><a href="#services">Social Media</a>
+          <a href="#services">Logo & Branding</a><a href="#services">Graphic Design</a>
+          <a href="#services">Digital Marketing</a>
+        </div>
+        <div class="fcol">
+          <h4>Contact</h4>
+          <a href="tel:+38344366680">+383 44 366 680</a>
+          <a href="mailto:info@anesdemolli.tech">info@anesdemolli.tech</a>
+          <a href="https://cal.com/anesdemolli" target="_blank">cal.com/anesdemolli</a>
+          <span>Prishtina, Kosovo</span>
+        </div>
+      </div>
+    </div>
+    <!-- Live clock -->
+    <div class="footer-live-bar">
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span class="live-label">LIVE</span>
+      </div>
+      <div class="live-clock">
+        <span class="live-tz">Kosovo (CET/CEST)</span>
+        <span id="kosovoTime" class="live-time">—</span>
+        <span id="kosovoDate" class="live-date">—</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2021–2025 webprishtina. All rights reserved.</p>
+      <p>info@anesdemolli.tech</p>
+    </div>
+  </div>
+</footer>
 
-        renderProjects();
+<!-- ══════════════ CHATBOT ══════════════ -->
+<button class="chat-fab" id="chatToggle" aria-label="Open chat">
+  <img src="img/logo.png" alt="webprishtina" class="chat-fab-logo" id="chatFabLogo"/>
+  <svg id="chatCloseIco" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-head-logo"><img src="img/logo.png" alt="webprishtina" class="chat-logo-img"/></div>
+    <div><strong>webprishtina</strong><span class="chat-online">● Online now</span></div>
+    <button onclick="document.getElementById('chatToggle').click()" class="chat-min">−</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="cmsg cbot">
+      <div class="cbubble">Hello! How can I help you today? Ask me about our services, pricing, projects, or how to get started.</div>
+      <div class="ctime">Just now</div>
+    </div>
+    <div class="chat-chips">
+      <button onclick="sendSuggestion('What services do you offer?')">Services</button>
+      <button onclick="sendSuggestion('How much does it cost?')">Pricing</button>
+      <button onclick="sendSuggestion('Book a call')">Book a Call</button>
+      <button onclick="sendSuggestion('Show me projects')">Projects</button>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask anything..." autocomplete="off"/>
+    <button id="chatSendBtn" onclick="sendChatMessage()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
 
-        // Counters
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.dataset.target);
-                    let current = 0;
-                    const update = () => {
-                        current += target / 50;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current);
-                            requestAnimationFrame(update);
-                        } else {
-                            counter.textContent = target;
-                        }
-                    };
-                    update();
-                    counterObserver.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // Fade-up observer
-        const faders = document.querySelectorAll('.fade-up');
-        const appearOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
-        const appearOnScroll = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, appearOptions);
-        faders.forEach(fader => appearOnScroll.observe(fader));
-
-        // Smooth scroll for menu links
-        document.querySelectorAll('.menu-link a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    closeMenu();
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            header.classList.toggle('scrolled', window.scrollY > 50);
-        });
-    </script>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+<script src="script.js"></script>
 </body>
 </html>

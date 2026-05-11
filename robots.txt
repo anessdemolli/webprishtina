@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webprishtina.onrender.com/sitemap.xml
