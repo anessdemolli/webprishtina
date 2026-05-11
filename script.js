@@ -10,12 +10,18 @@
   const links = menu.querySelectorAll('.nav-link');
   const sections = [...document.querySelectorAll('section[id]')];
 
+  let rafNav = false;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-    const y = window.scrollY + 90;
-    let cur = '';
-    sections.forEach(s => { if (s.offsetTop <= y) cur = s.id; });
-    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    if (rafNav) return;
+    rafNav = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+      const y = window.scrollY + 90;
+      let cur = '';
+      sections.forEach(s => { if (s.offsetTop <= y) cur = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      rafNav = false;
+    });
   }, { passive: true });
 
   hbg.addEventListener('click', () => {
@@ -24,63 +30,6 @@
   menu.addEventListener('click', e => {
     if (e.target.tagName === 'A') menu.classList.remove('open');
   });
-})();
-
-/* ════ FEATURED TERMINAL ════ */
-(function(){
-  const body = document.getElementById('ftBody');
-  if (!body) return;
-
-  const LINES = [
-    { t:'cmd',  v:'vercel --prod --project masterservicechef' },
-    { t:'out',  v:'  Queuing build...', c:'ft-dim' },
-    { t:'out',  v:'  ✓ Build completed in 3.1s', c:'ft-ok' },
-    { t:'out',  v:'  ✓ 124 modules transformed', c:'ft-ok' },
-    { t:'out',  v:'  ✓ dist/ → 418 kB gzipped', c:'ft-ok' },
-    { t:'out',  v:'  ✓ Live → masterservicechef.com', c:'ft-url' },
-    { t:'gap' },
-    { t:'cmd',  v:'git log --oneline -4' },
-    { t:'out',  v:'  a3f4b2c  feat: season 2 episode tracker', c:'ft-dim' },
-    { t:'out',  v:'  b8c2d1e  feat: RTK live vote integration', c:'ft-dim' },
-    { t:'out',  v:'  c7e4f2a  fix: og:image social meta tags', c:'ft-dim' },
-    { t:'out',  v:'  d1f8e3b  feat: RTK livestream embed', c:'ft-dim' },
-    { t:'gap' },
-    { t:'cmd',  v:'lighthouse masterservicechef.com' },
-    { t:'out',  v:'  Performance   96 / 100', c:'ft-score' },
-    { t:'out',  v:'  SEO           98 / 100', c:'ft-score' },
-    { t:'out',  v:'  Accessibility 94 / 100', c:'ft-score' },
-  ];
-
-  let idx = 0, running = false;
-
-  function addLine() {
-    if (idx >= LINES.length) {
-      setTimeout(() => { body.innerHTML = ''; idx = 0; addLine(); }, 2800);
-      return;
-    }
-    const l = LINES[idx++];
-    if (l.t === 'gap') {
-      const d = document.createElement('span');
-      d.className = 'ft-gap'; body.appendChild(d);
-    } else if (l.t === 'cmd') {
-      const d = document.createElement('span');
-      d.className = 'ft-line';
-      d.innerHTML = `<span class="ft-prompt">webprishtina@msc ~ $ </span><span class="ft-cmd">${l.v}</span>`;
-      body.appendChild(d);
-    } else {
-      const d = document.createElement('span');
-      d.className = `ft-line ${l.c || 'ft-dim'}`;
-      d.textContent = l.v; body.appendChild(d);
-    }
-    body.scrollTop = body.scrollHeight;
-    setTimeout(addLine, l.t === 'cmd' ? 220 : 70);
-  }
-
-  const obs = new IntersectionObserver(e => {
-    if (e[0].isIntersecting && !running) { running = true; addLine(); obs.disconnect(); }
-  }, { threshold: 0.3 });
-  const feat = document.querySelector('.featured');
-  if (feat) obs.observe(feat);
 })();
 
 /* ════ SCROLL REVEAL ════ */
@@ -259,7 +208,7 @@
 
   PROJECTS.forEach((p, i) => {
     const card = document.createElement('div');
-    card.className = 'pcard reveal';
+    card.className = 'pcard';
     card.innerHTML = `
       <div class="pcard-top">
         <div class="pcard-status ${p.live ? 'live' : 'concept'}">
@@ -280,29 +229,25 @@
     grid.appendChild(card);
   });
 
-  /* re-observe the freshly created cards for scroll reveal */
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 55);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
-  grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
   /* ── mobile carousel ── */
   const prevBtn   = document.getElementById('projPrev');
   const nextBtn   = document.getElementById('projNext');
   const counterEl = document.getElementById('projCounter');
+  const viewport  = grid.parentElement; /* .proj-viewport */
   let projIdx = 0;
 
   const isMobile = () => window.innerWidth <= 768;
   const total    = PROJECTS.length;
 
   function updateProjCarousel() {
-    if (!isMobile()) { grid.style.transform = ''; return; }
-    grid.style.transform = `translateX(-${projIdx * 100}%)`;
+    if (!isMobile()) {
+      grid.style.transform = '';
+      return;
+    }
+    /* use pixel offset = index × viewport width so each card = exactly one step */
+    const cardW = viewport.offsetWidth;
+    grid.style.transform = `translateX(-${projIdx * cardW}px)`;
     if (counterEl) counterEl.textContent =
       `${String(projIdx + 1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
     if (prevBtn) prevBtn.style.opacity = projIdx === 0 ? '.3' : '1';
@@ -316,7 +261,18 @@
     if (projIdx < total - 1) { projIdx++; updateProjCarousel(); }
   });
 
-  window.addEventListener('resize', () => { projIdx = 0; updateProjCarousel(); });
+  /* swipe support */
+  let touchStartX = 0;
+  viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  viewport.addEventListener('touchend', e => {
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 50) {
+      if (dx > 0 && projIdx < total - 1) { projIdx++; updateProjCarousel(); }
+      if (dx < 0 && projIdx > 0)         { projIdx--; updateProjCarousel(); }
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => { projIdx = 0; updateProjCarousel(); }, { passive: true });
   updateProjCarousel();
 })();
 
@@ -450,7 +406,11 @@
 /* ════ BACK TO TOP ════ */
 (function(){
   const btn = document.getElementById('backTop');
-  window.addEventListener('scroll', () => btn.classList.toggle('show', window.scrollY > 500), { passive: true });
+  let rafTop = false;
+  window.addEventListener('scroll', () => {
+    if (rafTop) return; rafTop = true;
+    requestAnimationFrame(() => { btn.classList.toggle('show', window.scrollY > 500); rafTop = false; });
+  }, { passive: true });
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 
