@@ -233,6 +233,34 @@
     });
   }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
   grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* ── mobile carousel ── */
+  const prevBtn   = document.getElementById('projPrev');
+  const nextBtn   = document.getElementById('projNext');
+  const counterEl = document.getElementById('projCounter');
+  let projIdx = 0;
+
+  const isMobile = () => window.innerWidth <= 768;
+  const total    = PROJECTS.length;
+
+  function updateProjCarousel() {
+    if (!isMobile()) { grid.style.transform = ''; return; }
+    grid.style.transform = `translateX(-${projIdx * 100}%)`;
+    if (counterEl) counterEl.textContent =
+      `${String(projIdx + 1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+    if (prevBtn) prevBtn.style.opacity = projIdx === 0 ? '.3' : '1';
+    if (nextBtn) nextBtn.style.opacity = projIdx >= total - 1 ? '.3' : '1';
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    if (projIdx > 0) { projIdx--; updateProjCarousel(); }
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    if (projIdx < total - 1) { projIdx++; updateProjCarousel(); }
+  });
+
+  window.addEventListener('resize', () => { projIdx = 0; updateProjCarousel(); });
+  updateProjCarousel();
 })();
 
 /* ════ AI NEWS CAROUSEL ════ */
